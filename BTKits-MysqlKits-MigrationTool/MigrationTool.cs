@@ -50,20 +50,33 @@ namespace BTKits_MysqlKits_MigrationTool
                 Console.WriteLine($"Adding {mysqlKits.Count} MysqlKits to BTKits...");
                 await BTKitsConnections.AddKitsList(mysqlKits);
                 Console.WriteLine($"Successfully Added {mysqlKits.Count} Kits!");
+                Console.WriteLine("-----------------------------------------------------");
 
                 List<cooldown> playerCooldowns = await MysqlKitsConnections.GetPlayerCooldowns();
                 Console.WriteLine($"Adding {playerCooldowns.Count} Player Cooldowns to BTKits...");
                 await BTKitsConnections.AddPlayerCooldownsList(playerCooldowns);
                 Console.WriteLine($"Successfully Added {playerCooldowns.Count} Cooldowns!");
+                Console.WriteLine("-----------------------------------------------------");
 
-                /*
-                int i = 1;
-                foreach (var kit in mysqlKits)
-                {
-                    Console.WriteLine($"{i} - {kit.Name}");
-                    i++;
-                }
-                */
+                var KitDetails = await MysqlKitsConnections.GetAllKitsItems();
+                var kitItems = KitDetails.Item1;
+                var kitVehicles = KitDetails.Item2;
+
+                Console.WriteLine($"Adding {kitItems.Count} Items to BTKits...");
+                await BTKitsConnections.AddKitItems(kitItems);
+                Console.WriteLine($"Successfully Added {kitItems.Count} Items!");
+                Console.WriteLine("-----------------------------------------------------");
+
+                Console.WriteLine($"Adding {kitVehicles.Count} Vehicles to BTKits...");
+                await BTKitsConnections.AddKitVehicles(kitVehicles);
+                Console.WriteLine($"Successfully Added {kitVehicles.Count} Vehicles!");
+                Console.WriteLine("-----------------------------------------------------");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("Successfully Migrated MysqlKits to BTKits!");
+                Console.WriteLine("You may now close this program.");
+
             }
             catch (Exception ex)
             {

@@ -14,6 +14,8 @@ namespace BTKits_MysqlKits_MigrationTool.Database
         private static string kitsTable = "BTKits_Kits";
         private static string playerCooldownsTable = "btkits_playercooldowns";
         private static string kitCooldowns = "BTKits_KitCooldowns";
+        private static string kitItemsTable = "BTKits_Items";
+        private static string kitVehiclesTable = "BTKits_Vehicles";
         private static bool ResetCooldownOnDeath = false;
 
         public static async Task AddKitsList(List<kits> mysqlKits)
@@ -67,6 +69,45 @@ namespace BTKits_MysqlKits_MigrationTool.Database
 
             // TODO - REMOVE THIS AFTER TESTING
             await using MySqlCommand deleteCommand = new MySqlCommand($"DELETE FROM {playerCooldownsTable}", connection);
+            await deleteCommand.ExecuteNonQueryAsync();
+
+            await using MySqlCommand command = new MySqlCommand(sqlString.ToString(), connection);
+            await command.ExecuteNonQueryAsync();
+        }
+
+        public static async Task AddKitItems(List<Items> kitsItems)
+        {
+            await using MySqlConnection connection = new MySqlConnection(MigrationTool.CreateConnectionString().ConnectionString);
+            await connection.OpenAsync();
+            var sqlString = new StringBuilder($"INSERT INTO {kitItemsTable} (KitName, ItemID, SightID, TacticalID, BarrelID, MagazineID, MagazineAmount, GripID, X, Y, Page, Rotation) VALUES");
+            var values = new List<string>();
+            foreach(var item in kitsItems)
+            {
+                values.Add(@$"(""{item.KitName}"", ""{item.ItemID}"", ""{item.SightID}"", ""{item.TacticalID}"", ""{item.BarrelID}"", ""{item.MagazineID}"", ""{item.MagazineAmount}"", ""{item.GripID}"", 0,0,0,0)");
+            }
+            sqlString.Append(string.Join(" , ", values));
+
+            // TODO - REMOVE THIS AFTER TESTING
+            await using MySqlCommand deleteCommand = new MySqlCommand($"DELETE FROM {kitItemsTable}", connection);
+            await deleteCommand.ExecuteNonQueryAsync();
+
+            await using MySqlCommand command = new MySqlCommand(sqlString.ToString(), connection);
+            await command.ExecuteNonQueryAsync();
+        }
+        public static async Task AddKitVehicles(List<Vehicles> kitVehicles)
+        {
+            await using MySqlConnection connection = new MySqlConnection(MigrationTool.CreateConnectionString().ConnectionString);
+            await connection.OpenAsync();
+            var sqlString = new StringBuilder($"INSERT INTO {kitVehiclesTable} (KitName, VehicleID) VALUES");
+            var values = new List<string>();
+            foreach (var vehicle in kitVehicles)
+            {
+                values.Add(@$"(""{vehicle.KitName}"", ""{vehicle.VehicleID}"")");
+            }
+            sqlString.Append(string.Join(" , ", values));
+
+            // TODO - REMOVE THIS AFTER TESTING
+            await using MySqlCommand deleteCommand = new MySqlCommand($"DELETE FROM {kitVehiclesTable}", connection);
             await deleteCommand.ExecuteNonQueryAsync();
 
             await using MySqlCommand command = new MySqlCommand(sqlString.ToString(), connection);
