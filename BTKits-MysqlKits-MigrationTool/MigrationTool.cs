@@ -21,8 +21,6 @@ namespace BTKits_MysqlKits_MigrationTool
         private static uint databasePort = new uint();
         private static List<MysqlKits> MysqlKits = new List<MysqlKits>() { };
 
-        // TODO - Remove this when release
-        private static bool AutoLogin = true;
         static void Main(string[] args)
         {
             Console.WriteLine("Program Running");
@@ -87,28 +85,17 @@ namespace BTKits_MysqlKits_MigrationTool
 
         private static void Login() // login method
         {
-            if(!AutoLogin)
-            {
-                Console.WriteLine("Database Name: ");
-                databaseName = Console.ReadLine();
-                Console.WriteLine("Database Username: ");
-                databaseUsername = Console.ReadLine();
-                Console.WriteLine("Database Password: ");
-                databasePassword = Console.ReadLine();
-                Console.WriteLine("Database Address: ");
-                databaseAddress = Console.ReadLine();
-                Console.WriteLine("Database Port: ");
-                databasePort = uint.Parse(Console.ReadLine());
-            }
-            else
-            {
-                databaseName = "unturned";
-                databaseUsername = "root";
-                databasePassword = "password";
-                databaseAddress = "127.0.0.1";
-                databasePort = 3306;
-            }
-            
+            Console.WriteLine("Database Name: ");
+            databaseName = Console.ReadLine();
+            Console.WriteLine("Database Username: ");
+            databaseUsername = Console.ReadLine();
+            Console.WriteLine("Database Password: ");
+            databasePassword = Console.ReadLine();
+            Console.WriteLine("Database Address: ");
+            databaseAddress = Console.ReadLine();
+            Console.WriteLine("Database Port: ");
+            databasePort = uint.Parse(Console.ReadLine());
+
             Console.WriteLine($"Database: {databaseName}\nUsername: {databaseUsername}\nPassword: {databasePassword}\nServer: {databaseAddress}\nPort: {databasePort} ");
 
 

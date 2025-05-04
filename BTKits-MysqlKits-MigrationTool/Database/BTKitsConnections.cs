@@ -39,11 +39,6 @@ namespace BTKits_MysqlKits_MigrationTool.Database
             sqlString.Append(string.Join(" , ", values1));
             cooldownSqlString.Append(string.Join(" , ", values2));
 
-            // TODO - REMOVE THIS AFTER TESTING
-            await using MySqlCommand deleteCommand = new MySqlCommand($"DELETE FROM {kitsTable}", connection);
-            await deleteCommand.ExecuteNonQueryAsync();
-            await using MySqlCommand deleteCommand2 = new MySqlCommand($"DELETE FROM {kitCooldowns}", connection);
-            await deleteCommand2.ExecuteNonQueryAsync();
 
             await using MySqlCommand command = new MySqlCommand(sqlString.ToString(), connection);
             await command.ExecuteNonQueryAsync();
@@ -67,10 +62,6 @@ namespace BTKits_MysqlKits_MigrationTool.Database
             sqlString.Append(string.Join(" , ", values));
 
 
-            // TODO - REMOVE THIS AFTER TESTING
-            await using MySqlCommand deleteCommand = new MySqlCommand($"DELETE FROM {playerCooldownsTable}", connection);
-            await deleteCommand.ExecuteNonQueryAsync();
-
             await using MySqlCommand command = new MySqlCommand(sqlString.ToString(), connection);
             await command.ExecuteNonQueryAsync();
         }
@@ -87,9 +78,6 @@ namespace BTKits_MysqlKits_MigrationTool.Database
             }
             sqlString.Append(string.Join(" , ", values));
 
-            // TODO - REMOVE THIS AFTER TESTING
-            await using MySqlCommand deleteCommand = new MySqlCommand($"DELETE FROM {kitItemsTable}", connection);
-            await deleteCommand.ExecuteNonQueryAsync();
 
             await using MySqlCommand command = new MySqlCommand(sqlString.ToString(), connection);
             await command.ExecuteNonQueryAsync();
@@ -105,10 +93,6 @@ namespace BTKits_MysqlKits_MigrationTool.Database
                 values.Add(@$"(""{vehicle.KitName}"", ""{vehicle.VehicleID}"")");
             }
             sqlString.Append(string.Join(" , ", values));
-
-            // TODO - REMOVE THIS AFTER TESTING
-            await using MySqlCommand deleteCommand = new MySqlCommand($"DELETE FROM {kitVehiclesTable}", connection);
-            await deleteCommand.ExecuteNonQueryAsync();
 
             await using MySqlCommand command = new MySqlCommand(sqlString.ToString(), connection);
             await command.ExecuteNonQueryAsync();
